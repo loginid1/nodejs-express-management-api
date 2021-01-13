@@ -124,7 +124,9 @@ MANAGEMENT_API_KEY=hgYQ4YTdJAgufBxogSZii7_JXWt412mDxVPYQkP0ztEBPFi--XXhxDMmGPnPB
 The sample includes these endpoints:
 
 **DELETE** /users/:username
+
 An endpoint to delete the user by a specified username which returns 204 status on success.
+
 ```
 curl --location --request DELETE 'http://localhost:6000/users/john.doe'
 ```
