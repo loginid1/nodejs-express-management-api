@@ -1,0 +1,79 @@
+openapi: 3.0.0
+info:
+  title: LoginID Management API 
+  description: LoginID documentation 
+  version: 1.0.0
+  # Contact information: name, email, URL.
+  contact:
+    name: LoginID Support
+    email: support@loginid.io
+    url: https://loginid.io
+  # Name of the license and a URL to the license description.
+  license:
+    name: LoginID
+    url: https://loginid.io
+    
+security:
+  - authToken: []  
+  
+# LoginID Management API   
+paths:
+  # OpenAPI documents all need a paths element
+  /manage/{client_id}/users/{username}:
+    delete:
+      summary: 1.1) Delete a user record 
+      tags:
+        - Users
+      parameters:
+        - name: client_id
+          in: path
+          description: Management API key which is created on LoginID admin dashboard.
+          required: true
+          schema:
+            type: string
+        - name: username
+          in: path
+          description: Username of the user to delete.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: User successfully deleted. 
+        '400':
+          description: Error returns from application related problem
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: user_not_deleted
+                  message:
+                    type: string
+                    example: Failed to delete the user.
+        '401':
+          description: Invalid token.
+        '403':
+          description: "Insufficient scope; expected: users:delete."
+        '5XX':
+          description: Error returns from system related problem 
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal server error 
+
+
+# Define the security scheme type (HTTP bearer)
+components:
+  securitySchemes:
+    authToken:            
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+            
