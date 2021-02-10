@@ -131,4 +131,39 @@ An endpoint to delete the user by a specified username which returns 204 status 
 curl --location --request DELETE 'http://localhost:6000/users/john.doe'
 ```
 
+##How to get a Management API Token?
 
+To call the LoginID Management API endpoints, developers need to authenticate with an access token called the Management API token. These tokens are JSON Web Tokens (JWTs) which contain specific grant permissions known as scopes. 
+
+###Create a Mangament API token
+A Management API token has to be signed by a developer and added to request headers as `Authorization: Bearer <token>` header before sending requests. 
+
+The required token payload structure is shown below:
+```json
+  {
+    "type": "users.delete",
+    "username": "john.doe",
+    "nonce": "749206e3-cbc0-47c9-af67-19fa8c31ec16",
+    "iat": "1610376333"
+  }; 
+```
+`type` - The scope of the requested API endpoint call.
+`username` - The user's username which is used in the requested operation.
+`nonce` - uuid to prevent repetetive requests with the same JWT. 
+`iat` - The issue date of the token.
+
+The header of a token:
+```json
+{
+    "alg": "ES256",
+    "typ": "JWT"
+}
+```
+
+Once the token is created, it must be signed with ES256 algorithm using the API credential private key.
+
+###How to find out which scope is required?
+Each backend-to-backend application that accesses an API must be granted a specific scope. Scopes are permissions that should be granted by the owner. To see the required scope for each endpoint, check out the Management API reference. For example, the Delete a user by username endpoint requires the scope users:delete.
+
+###Token security and lifetime
+Each Management API token must contain a `nonce` key which ensures that it is expired once the request is sent. The same token cannot be used to make a new request. Create a new access token when a new request is made.
