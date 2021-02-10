@@ -48,6 +48,7 @@ app.delete("/users/:username", async (req, res) => {
   // iat - issue at time 
   var payload = {
     type: "users.delete",
+    username: username,
     nonce: uuid.v4(),
     iat: parseInt(Date.now() / 1000),
   };
