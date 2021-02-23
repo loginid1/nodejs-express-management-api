@@ -86,7 +86,7 @@ To obtain the client keys you will need to perform the following steps:
 
 **Step 1** - Using an existing account or registering a new one
 
- - Navigate to https://usw1.loginid.io/en/register
+ - Navigate to https://sandbox-usw1.api.loginid.io
  - Enter your username and organization id for an existing account or select the **"Sign Up"** option and create a new account.
  - Hit the **"Login"** or **"Register"** button
 
