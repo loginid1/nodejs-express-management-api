@@ -75,7 +75,7 @@ $ npm run dev
 This is the URI that will be used to communicate with LoginID's Management API servers.
 
 ```
-MANAGEMENT_API_SERVICE_URL=https://
+MANAGEMENT_API_SERVICE_URL=https://directweb.sandbox-usw1.api.loginid.io
 ```
 
 #### The `MANAGEMENT_API_KEY` and `API_PRIVATE_KEY` variables
