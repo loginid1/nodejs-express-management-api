@@ -163,7 +163,7 @@ The header of a token:
 Once the token is created, it must be signed with ES256 algorithm using the API credential private key.
 
 ### How to find out which scope is required?
-Each backend-to-backend application that accesses an API must be granted a specific scope. Scopes are permissions that should be granted by the owner. To see the required scope for each endpoint, check out the Management API reference. For example, the Delete a user by username endpoint requires the scope users:delete.
+Each backend-to-backend application that accesses an API must be granted a specific scope. Scopes are permissions that should be granted by the owner. To see the required scope for each endpoint, check out the Management API reference. For example, the Delete a user by username endpoint requires the scope `users:delete`.
 
 ### Token security and lifetime
 Each Management API token must contain a `nonce` key which ensures that it is expired once the request is sent. The same token cannot be used to make a new request. Create a new access token when a new request is made.
