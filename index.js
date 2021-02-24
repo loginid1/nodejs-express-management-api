@@ -69,20 +69,20 @@ app.delete("/users/:username", async (req, res) => {
 
     // user record is successfully deleted
     if (response.status === 204) {	
-        res.sendStatus(204)
+        return res.sendStatus(204)
     }
 
     // check whether something went wrong 
     let jsonResponse = await response.json();
     if (response.ok) {
-      res.status(200).json(jsonResponse);
+      return res.status(200).json(jsonResponse);
     } else {
-      res.status(response.status).json({ code: jsonResponse.code, message: jsonResponse.message });
+      return res.status(response.status).json({ code: jsonResponse.code, message: jsonResponse.message });
     }
 
   } catch(err) {
       console.log(err);
-      res.status(500).json(err);
+      return res.status(500).json(err);
   }
 });
 
