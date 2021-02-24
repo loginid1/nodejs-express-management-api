@@ -14,7 +14,7 @@ const managementApiServiceUrl = process.env.MANAGEMENT_API_SERVICE_URL || '';
  * Making sure that the required environment variables are filled out
  */
 const requiredEnvParams = [
-  "API_CREDENTIAL_KEY",
+  "API_PRIVATE_KEY",
   "MANAGEMENT_API_KEY",
   "MANAGEMENT_API_SERVICE_URL"
 ];
