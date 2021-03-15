@@ -33,8 +33,8 @@ app.get("/_health", (req, res) => {
 /**
  * Requests LoginID Management API to delete a user by username
  */
-app.delete("/users/:username", async (req, res) => {
-  const username = req.params.username;
+app.delete("/users/:user_id", async (req, res) => {
+  const userId = req.params.user_id;
   
   // Management API key - created on LoginID admin dashbaord 
   const clientId = process.env.MANAGEMENT_API_KEY
@@ -48,7 +48,6 @@ app.delete("/users/:username", async (req, res) => {
   // iat - issue at time 
   var payload = {
     type: "users.delete",
-    username: username,
     nonce: uuid.v4(),
     iat: parseInt(Date.now() / 1000),
   };
@@ -58,12 +57,13 @@ app.delete("/users/:username", async (req, res) => {
   
   // make a request to LoginID Management API
   try {
-    let response = await fetch(managementApiServiceUrl + `/manage/${clientId}/users/${username}`, {
+    let response = await fetch(managementApiServiceUrl + `/manage/users/${userId}`, {
         method: 'delete',
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'authorization': `Bearer ${token}`,
+          'X-API-Key': clientId,
         }
     });
 
