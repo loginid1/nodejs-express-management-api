@@ -87,7 +87,7 @@ To obtain the client keys you will need to perform the following steps:
 **Step 1** - Using an existing account or registering a new one
 
  - Navigate to https://sandbox-usw1.api.loginid.io
- - Enter your username and organization id for an existing account or select the **"Sign Up"** option and create a new account.
+ - Enter your username for an existing account or select the **"Sign Up"** option and create a new account.
  - Hit the **"Login"** or **"Register"** button
 
 **Step 2** - Use your biometric capabilities
@@ -121,15 +121,7 @@ MANAGEMENT_API_KEY=hgYQ4YTdJAgufBxogSZii7_JXWt412mDxVPYQkP0ztEBPFi--XXhxDMmGPnPB
 
 ## Endpoints
 
-The sample includes these endpoints:
-
-**DELETE** /users/:username
-
-An endpoint to delete the user by a specified username which returns 204 status on success.
-
-```
-curl --location --request DELETE 'http://localhost:6000/users/john.doe'
-```
+Please check the [API Reference](https://github.com/loginid1/nodejs-express-management-api/blob/main/openapi/managementApi.yaml)
 
 ## How to get a Management API Token?
 
@@ -161,7 +153,7 @@ The header of a token:
 Once the token is created, it must be signed with ES256 algorithm using the API credential private key.
 
 ### How to find out which scope is required?
-Each backend-to-backend application that accesses an API must be granted a specific scope. Scopes are permissions that should be granted by the owner. To see the required scope for each endpoint, check out the Management API reference. For example, the Delete a user by username endpoint requires the scope `users.delete`.
+Each backend-to-backend application that accesses an API must be granted a specific scope. Scopes are permissions that should be granted by the owner. To see the required scope for each endpoint, check out the Management API reference. For example, the Delete a user by user id endpoint requires the scope `users.delete`.
 
 ### Token security and lifetime
 The Management API token is a short-lived token which expires in 5 minutes. Each token must contain a `nonce` key which ensures that it is expired once the request is sent. The same token cannot be used to make a new request. Create a new access token when a new request is made.

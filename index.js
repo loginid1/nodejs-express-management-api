@@ -31,7 +31,7 @@ app.get("/_health", (req, res) => {
 });
 
 /**
- * Requests LoginID Management API to delete a user by username
+ * Requests LoginID Management API to delete a user by user id
  */
 app.delete("/users/:user_id", async (req, res) => {
   const userId = req.params.user_id;
