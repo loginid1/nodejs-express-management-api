@@ -37,7 +37,7 @@ app.delete("/users/:user_id", async (req, res) => {
   const userId = req.params.user_id;
   
   // Management API key - created on LoginID admin dashbaord 
-  const clientId = process.env.MANAGEMENT_API_KEY
+  const apiKey = process.env.MANAGEMENT_API_KEY
 
   // API Credential Key - created and assigned to the Mangement API key on LoginID admin dashbaord 
   const pkey = process.env.API_PRIVATE_KEY.replace(/\\n/g, '\n') 
@@ -63,7 +63,7 @@ app.delete("/users/:user_id", async (req, res) => {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
           'authorization': `Bearer ${token}`,
-          'X-API-Key': clientId,
+          'X-API-Key': apiKey,
         }
     });
 
