@@ -1,8 +1,11 @@
 var jwt = require("jsonwebtoken");
 var uuid = require("uuid");
 
+// LoginID Management API key - created on LoginID admin dashbaord 
+const apiKey = process.env.MANAGEMENT_API_KEY || "";
+
 // Generates LoginID authorization token for management api requests
-// scope: the scope of the requested operation
+// scope: the action scope of the requested operation
 const generateToken = (scope) => {
 
     // API Credential Key - created and assigned to the Mangement API key on LoginID admin dashbaord 
@@ -23,6 +26,18 @@ const generateToken = (scope) => {
     return token;
 } 
 
+// Headers for the Management API requests
+// authToken: the signed JWT/authorization token that created and signed in generateToken()
+const getHeaders = (authToken) => {
+    return {
+        "Content-Type": "application/json",
+        "Accept": "application/json",
+        "authorization": `Bearer ${authToken}`,
+        'X-API-Key': apiKey,
+    };
+}
+
 module.exports = {
-    generateToken
+    generateToken,
+    getHeaders
 }

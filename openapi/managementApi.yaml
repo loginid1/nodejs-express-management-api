@@ -18,30 +18,33 @@ security:
   
 # LoginID Management API   
 paths:
-  # OpenAPI documents all need a paths element
-  /manage/{client_id}/users/{username}:
+  # Users
+  /manage/users/{user_id}:
     delete:
-      summary: 1.1) Delete a user record 
+      summary: Delete a user account 
+      description: '**Scope:** users.delete'
       tags:
         - Users
       parameters:
-        - name: client_id
-          in: path
+        - in: header
+          name: X-API-Key
           description: Management API key which is created on LoginID admin dashboard.
           required: true
           schema:
             type: string
-        - name: username
+        - name: user_id
           in: path
-          description: Username of the user to delete.
+          description: Unique ID of the user to be deleted.
           required: true
           schema:
             type: string
       responses:
         '204':
-          description: User successfully deleted. 
+          description: User account deleted successfully.
         '400':
           description: Error returns from application related problem
+        '401':
+          description: Invalid token.
           content:
             application/json:    
               schema:
@@ -49,14 +52,23 @@ paths:
                 properties:
                   code:
                     type: string
-                    example: user_not_deleted
+                    example: unauthorized
                   message:
                     type: string
-                    example: Failed to delete the user.
-        '401':
-          description: Invalid token.
-        '403':
-          description: "Insufficient scope; expected: users:delete."
+                    example: Invalid authorization token        
+        '404':
+          description: User not found.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: user_not_found
+                  message:
+                    type: string
+                    example: User not found   
         '5XX':
           description: Error returns from system related problem 
           content:
@@ -67,7 +79,182 @@ paths:
                   message:
                     type: string
                     example: Internal server error 
-
+  /manage/users/{user_id}/activate:
+    put:
+      summary: Activate a user account 
+      description: '**Scope:** users.activate'
+      tags:
+        - Users
+      parameters:
+        - in: header
+          name: X-API-Key
+          description: Management API key which is created on LoginID admin dashboard.
+          required: true
+          schema:
+            type: string
+        - name: user_id
+          in: path
+          description: Unique ID of the user to be deleted.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User account activated successfully.
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Error returns from application related problem
+        '401':
+          description: Invalid token.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: unauthorized
+                  message:
+                    type: string
+                    example: Invalid authorization token
+        '404':
+          description: User not found.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: user_not_found
+                  message:
+                    type: string
+                    example: User not found   
+        '5XX':
+          description: Error returns from system related problem
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal server error
+  /manage/users/{user_id}/deactivate:
+    put:
+      summary: Deactivate a user account
+      description: '**Scope:** users.deactivate'
+      tags:
+        - Users
+      parameters:
+        - in: header
+          name: X-API-Key
+          description: Management API key which is created on LoginID admin dashboard.
+          required: true
+          schema:
+            type: string
+        - name: user_id
+          in: path
+          description: Unique ID of the user to be deleted.
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: User account deactivated successfully.
+          content:
+            application/json:
+              schema:
+                  $ref: '#/components/schemas/User'
+        '400':
+          description: Error returns from application related problem
+        '401':
+          description: Invalid token.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: unauthorized
+                  message:
+                    type: string
+                    example: Invalid authorization token  
+        '404':
+          description: User not found.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: user_not_found
+                  message:
+                    type: string
+                    example: User not found
+        '5XX':
+          description: Error returns from system related problem
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal server error
+                    
+  /manage/users/{user_id}/email-verification/dispatch:
+    delete:
+      summary: Send email verificaiton request to a user 
+      description: '**Scope:** users.email-verification.dispatch'
+      tags:
+        - Users
+      parameters:
+        - in: header
+          name: X-API-Key
+          description: Management API key which is created on LoginID admin dashboard.
+          required: true
+          schema:
+            type: string
+        - name: user_id
+          in: path
+          description: Unique ID of the user to be deleted.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Email verification is dispatched successfully.
+        '400':
+          description: Error returns from application related problem
+        '401':
+          description: Invalid token.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: unauthorized
+                  message:
+                    type: string
+                    example: Invalid authorization token
+        '5XX':
+          description: Error returns from system related problem
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal server error
 
 # Define the security scheme type (HTTP bearer)
 components:
@@ -76,4 +263,24 @@ components:
       type: http
       scheme: bearer
       bearerFormat: JWT
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        client_id:
+          type: string
+        username:
+          type: string
+        status:
+          type: string
+        type:
+          type: string
+        namspace_id:
+          type: string
+        created_at:
+          type: string
+          format: date
             
