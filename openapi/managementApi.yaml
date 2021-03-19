@@ -19,21 +19,21 @@ security:
 # LoginID Management API   
 paths:
   # OpenAPI documents all need a paths element
-  /manage/{client_id}/users/{username}:
+  /manage/users/{user_id}:
     delete:
       summary: 1.1) Delete a user record 
       tags:
         - Users
       parameters:
-        - name: client_id
-          in: path
+        - in: header
+          name: X-API-Key
           description: Management API key which is created on LoginID admin dashboard.
           required: true
           schema:
             type: string
-        - name: username
+        - name: user_id
           in: path
-          description: Username of the user to delete.
+          description: Unique ID of the user to be deleted.
           required: true
           schema:
             type: string
@@ -52,11 +52,33 @@ paths:
                     example: user_not_deleted
                   message:
                     type: string
-                    example: Failed to delete the user.
+                    example: Failed to delete the user
         '401':
           description: Invalid token.
-        '403':
-          description: "Insufficient scope; expected: users:delete."
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: unauthorized
+                  message:
+                    type: string
+                    example: Invalid authorization token        
+        '404':
+          description: User not found.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: user_not_found
+                  message:
+                    type: string
+                    example: User not found   
         '5XX':
           description: Error returns from system related problem 
           content:
