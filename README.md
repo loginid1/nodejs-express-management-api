@@ -123,6 +123,21 @@ MANAGEMENT_API_KEY=hgYQ4YTdJAgufBxogSZii7_JXWt412mDxVPYQkP0ztEBPFi--XXhxDMmGPnPB
 
 Please check the [API Reference](https://github.com/loginid1/nodejs-express-management-api/blob/main/openapi/managementApi.yaml)
 
+The sample includes these endpoints:
+
+**DELETE /users/:user_id**
+
+An endpoint to delete the user by a unique user id which returns 204 status on success.
+
+curl --location --request DELETE 'http://localhost:6000/users/66c96351-b824-4476-afa1-314ed683e770'
+
+**POST /users/delete**
+
+An endpoint to delete the user by a specified username in the payload which returns 204 status on success.
+
+curl --location --request POST 'http://localhost:6000/users/delete' --data-raw '{ "username": "john.doe" }'
+
+
 ## How to get a Management API Token?
 
 To call the LoginID Management API endpoints, developers need to authenticate with an access token called the Management API token. These tokens are JSON Web Tokens (JWTs) which contain specific grant permissions known as scopes. 

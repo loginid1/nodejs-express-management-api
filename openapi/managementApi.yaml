@@ -19,9 +19,82 @@ security:
 # LoginID Management API   
 paths:
   # OpenAPI documents all need a paths element
+  /manage/users/delete:
+    post:
+      summary: Delete a user record by username
+      tags:
+        - Users
+      requestBody:
+         content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+      parameters:
+        - in: header
+          name: X-API-Key
+          description: Management API key which is created on LoginID admin dashboard.
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: User successfully deleted. 
+        '400':
+          description: Error returns from application related problem
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: user_not_deleted
+                  message:
+                    type: string
+                    example: Failed to delete the user
+        '401':
+          description: Invalid token.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: unauthorized
+                  message:
+                    type: string
+                    example: Invalid authorization token        
+        '404':
+          description: User not found.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: user_not_found
+                  message:
+                    type: string
+                    example: User not found   
+        '5XX':
+          description: Error returns from system related problem 
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Internal server error 
+
   /manage/users/{user_id}:
     delete:
-      summary: 1.1) Delete a user record 
+      summary:  Delete a user record by user id 
       tags:
         - Users
       parameters:
