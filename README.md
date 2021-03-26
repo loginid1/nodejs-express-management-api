@@ -149,6 +149,7 @@ The required token payload structure is shown below:
 ```json
   {
     "type": "users.delete",
+    "username": "john.doe",
     "nonce": "749206e3-cbc0-47c9-af67-19fa8c31ec16",
     "iat": 1610376333
   }; 
