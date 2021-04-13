@@ -1,28 +1,13 @@
 openapi: 3.0.0
 info:
-  title: LoginID Management API 
+  title: LoginID Management API Sample App
   description: LoginID documentation 
   version: 1.0.0
-  # Contact information: name, email, URL.
-  contact:
-    name: LoginID Support
-    email: support@loginid.io
-    url: https://loginid.io
-  # Name of the license and a URL to the license description.
-  license:
-    name: LoginID
-    url: https://loginid.io
-    
-security:
-  - authToken: []  
-  
-# LoginID Management API   
+# LoginID Management API Sample App 
 paths:
-  # OpenAPI documents all need a paths element
-  /manage/users/get:
-    post:
+  /users/get:
+    post: 
       summary: Retrieve a user profile by username
-      description: '**Scope:** users.retrieve'
       tags:
         - Users
       requestBody:
@@ -33,13 +18,6 @@ paths:
               properties:
                 username:
                   type: string
-      parameters:
-        - in: header
-          name: X-API-Key
-          description: Management API key which is created on LoginID admin dashboard.
-          required: true
-          schema:
-            type: string
       responses:
         '200':
           description: Successful response. 
@@ -85,10 +63,10 @@ paths:
                   message:
                     type: string
                     example: Internal server error 
-  /manage/users/delete:
+
+  /users/delete:
     post:
       summary: Delete a user account by username
-      description: '**Scope:** users.delete'
       tags:
         - Users
       requestBody:
@@ -99,13 +77,6 @@ paths:
               properties:
                 username:
                   type: string
-      parameters:
-        - in: header
-          name: X-API-Key
-          description: Management API key which is created on LoginID admin dashboard.
-          required: true
-          schema:
-            type: string
       responses:
         '204':
           description: User successfully deleted. 
@@ -144,22 +115,16 @@ paths:
                 properties:
                   message:
                     type: string
-                    example: Internal server error 
+                    example: Internal server error
+      
 
-  /manage/users/{user_id}:
+  /users/{id}:
     delete:
       summary:  Delete a user account by user id 
-      description: '**Scope:** users.delete'
       tags:
         - Users
       parameters:
-        - in: header
-          name: X-API-Key
-          description: Management API key which is created on LoginID admin dashboard.
-          required: true
-          schema:
-            type: string
-        - name: user_id
+        - name: id
           in: path
           description: Unique ID of the user to be deleted.
           required: true
@@ -204,20 +169,14 @@ paths:
                   message:
                     type: string
                     example: Internal server error 
-  /manage/users/{user_id}/activate:
+
+  /users/{id}/activate:
     put:
       summary: Activate a user account 
-      description: '**Scope:** users.activate'
       tags:
         - Users
       parameters:
-        - in: header
-          name: X-API-Key
-          description: Management API key which is created on LoginID admin dashboard.
-          required: true
-          schema:
-            type: string
-        - name: user_id
+        - name: id
           in: path
           description: Unique ID of the user to be deleted.
           required: true
@@ -266,20 +225,14 @@ paths:
                   message:
                     type: string
                     example: Internal server error
-  /manage/users/{user_id}/deactivate:
+
+  /users/{id}/deactivate:
     put:
       summary: Deactivate a user account
-      description: '**Scope:** users.deactivate'
       tags:
         - Users
       parameters:
-        - in: header
-          name: X-API-Key
-          description: Management API key which is created on LoginID admin dashboard.
-          required: true
-          schema:
-            type: string
-        - name: user_id
+        - name: id
           in: path
           description: Unique ID of the user to be deleted.
           required: true
@@ -328,21 +281,14 @@ paths:
                   message:
                     type: string
                     example: Internal server error
-                    
-  /manage/users/{user_id}/email-verification/dispatch:
+
+  /users/{id}/email-verification/dispatch:
     post:
       summary: Send email verificaiton request to a user 
-      description: '**Scope:** users.email-verification.dispatch'
       tags:
         - Users
       parameters:
-        - in: header
-          name: X-API-Key
-          description: Management API key which is created on LoginID admin dashboard.
-          required: true
-          schema:
-            type: string
-        - name: user_id
+        - name: id
           in: path
           description: Unique ID of the user to be deleted.
           required: true
@@ -387,13 +333,7 @@ paths:
                   message:
                     type: string
                     example: Internal server error
-
 components:
-  securitySchemes:
-    authToken:            
-      type: http
-      scheme: bearer
-      bearerFormat: JWT
   schemas:
     UserProfile:
       type: object
@@ -447,5 +387,4 @@ components:
           type: string
         created_at:
           type: string
-          format: date
-            
+          format: date                    
