@@ -123,6 +123,21 @@ MANAGEMENT_API_KEY=hgYQ4YTdJAgufBxogSZii7_JXWt412mDxVPYQkP0ztEBPFi--XXhxDMmGPnPB
 
 Please check the [API Reference](https://github.com/loginid1/nodejs-express-management-api/blob/main/openapi/managementApi.yaml)
 
+The sample includes these endpoints:
+
+**DELETE /users/:user_id**
+
+An endpoint to delete the user by a unique user id which returns 204 status on success.
+
+curl --location --request DELETE 'http://localhost:6000/users/66c96351-b824-4476-afa1-314ed683e770'
+
+**POST /users/delete**
+
+An endpoint to delete the user by a specified username in the payload which returns 204 status on success.
+
+curl --location --request POST 'http://localhost:6000/users/delete' --data-raw '{ "username": "john.doe" }'
+
+
 ## How to get a Management API Token?
 
 To call the LoginID Management API endpoints, developers need to authenticate with an access token called the Management API token. These tokens are JSON Web Tokens (JWTs) which contain specific grant permissions known as scopes. 
@@ -153,7 +168,7 @@ The header of a token:
 Once the token is created, it must be signed with ES256 algorithm using the API credential private key.
 
 ### How to find out which scope is required?
-Each backend-to-backend application that accesses an API must be granted a specific scope. Scopes are permissions that should be granted by the owner. To see the required scope for each endpoint, check out the Management [API Reference](https://github.com/loginid1/nodejs-express-management-api/blob/main/openapi/managementApi.yaml). For example, Delete a user account action requires the scope `users.delete`.
+Each backend-to-backend application that accesses an API must be granted a specific scope. Scopes are permissions that should be granted by the owner. To see the required scope for each endpoint, check out the Management [API Reference](https://github.com/loginid1/nodejs-express-management-api/blob/main/openapi/managementApi.yaml). For example, Delete a user by user id endpoint requires the scope type `users.delete`.
 
 ### Token security and lifetime
 The Management API token is a short-lived token which expires in 5 minutes. Each token must contain a `nonce` key which ensures that it is expired once the request is sent. The same token cannot be used to make a new request. Create a new access token when a new request is made.

@@ -15,7 +15,7 @@ const UserHandlers = {
 
         // make a request to LoginID Management API
         try {
-            let response = await fetch(`${managementApiServiceUrl}/manage/users/${userID}`, {
+            let response = await fetch(managementApiServiceUrl + `/manage/users/${userID}`, {
                 method: "put",
                 headers: getHeaders(token),
                 body: JSON.stringify(req.body)
@@ -41,7 +41,7 @@ const UserHandlers = {
         
         // make a request to LoginID Management API
         try {
-            let response = await fetch(`${managementApiServiceUrl}/manage/users/${userID}/activate`, {
+            let response = await fetch(managementApiServiceUrl + `/manage/users/${userID}/activate`, {
                 method: "put",
                 headers: getHeaders(token),
             });
@@ -72,7 +72,7 @@ const UserHandlers = {
 
         // make a request to LoginID Management API
         try {
-                let response = await fetch(`${managementApiServiceUrl}/manage/users/${userID}/deactivate`, {
+                let response = await fetch(managementApiServiceUrl + `/manage/users/${userID}/deactivate`, {
                 method: "put",
                 headers: getHeaders(token),
             });
@@ -126,6 +126,39 @@ const UserHandlers = {
         }
     },
 
+        
+    async deleteUserByUsername(req, res, next) {
+        const username = req.params.username;
+
+        // create a signed JWT 
+        token = generateToken("users.delete");
+
+        // make a request to LoginID Management API
+        try {
+            let response = await fetch(managementApiServiceUrl + `/manage/users/delete`, {
+                method: "delete",
+                headers: getHeaders(token),
+            });
+
+            // user record is successfully deleted
+            if (response.status === 204) {	
+                return res.sendStatus(204)
+            }
+
+            // check whether something went wrong 
+            let jsonResponse = await response.json();
+            if (response.ok) {
+                return res.status(200).json(jsonResponse);
+            } else {
+                return res.status(response.status).json({ code: jsonResponse.code, message: jsonResponse.message });
+            }
+
+        } catch(err) {
+            console.log(err);
+            return res.status(500).json(err);
+        }
+    },
+
     async dispatchEmailVerification(req, res, next) {
         const userID = req.params.user_id;
 
@@ -134,7 +167,7 @@ const UserHandlers = {
         
         // make a request to LoginID Management API
         try {
-            let response = await fetch(`${managementApiServiceUrl}/manage/users/${userID}/email-verification/dispatch`, {
+            let response = await fetch(managementApiServiceUrl + `/manage/users/${userID}/email-verification/dispatch`, {
                 method: "post",
                 headers: getHeaders(token),
             });
