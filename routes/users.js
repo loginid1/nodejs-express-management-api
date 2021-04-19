@@ -2,7 +2,7 @@ const express = require("express");
 const handlers = require("../handlers/users")
 const router = express.Router();
 
-router.post("/get", handlers.getUserProfileByUsername.bind(handlers))
+router.post("/retrieve", handlers.getUserProfileByUsername.bind(handlers))
 router.post("/delete", handlers.deleteUserByUsername.bind(handlers))
 
 router.put("/:user_id/activate", handlers.activateUser.bind(handlers))

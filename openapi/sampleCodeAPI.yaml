@@ -5,7 +5,7 @@ info:
   version: 1.0.0
 # LoginID Management API Sample App 
 paths:
-  /users/get:
+  /users/retrieve:
     post: 
       summary: Retrieve a user profile by username
       tags:
@@ -39,7 +39,20 @@ paths:
                     example: unauthorized
                   message:
                     type: string
-                    example: Invalid authorization token        
+                    example: Failed to verify authorization token
+        '403':
+          description: Operation not allowed.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: operation_not_allowed
+                  message:
+                    type: string
+                    example: Invalid authorization token       
         '404':
           description: User not found.
           content:
@@ -105,6 +118,19 @@ paths:
                     example: unauthorized
                   message:
                     type: string
+                    example: Failed to verify authorization token
+        '403':
+          description: Operation not allowed.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: operation_not_allowed
+                  message:
+                    type: string
                     example: Invalid authorization token        
         '5XX':
           description: Error returns from system related problem 
@@ -156,6 +182,19 @@ paths:
                   code:
                     type: string
                     example: unauthorized
+                  message:
+                    type: string
+                    example: Failed to verify authorization token
+        '403':
+          description: Operation not allowed.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: operation_not_allowed
                   message:
                     type: string
                     example: Invalid authorization token        
@@ -214,6 +253,19 @@ paths:
                     example: unauthorized
                   message:
                     type: string
+                    example: Failed to verify authorization token
+        '403':
+          description: Operation not allowed.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: operation_not_allowed
+                  message:
+                    type: string
                     example: Invalid authorization token
         '5XX':
           description: Error returns from system related problem
@@ -270,6 +322,19 @@ paths:
                     example: unauthorized
                   message:
                     type: string
+                    example: Failed to verify authorization token
+        '403':
+          description: Operation not allowed.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: operation_not_allowed
+                  message:
+                    type: string
                     example: Invalid authorization token  
         '5XX':
           description: Error returns from system related problem
@@ -320,6 +385,19 @@ paths:
                   code:
                     type: string
                     example: unauthorized
+                  message:
+                    type: string
+                    example: Failed to verify authorization token
+        '403':
+          description: Operation not allowed.
+          content:
+            application/json:    
+              schema:
+                type: object
+                properties:
+                  code:
+                    type: string
+                    example: operation_not_allowed
                   message:
                     type: string
                     example: Invalid authorization token

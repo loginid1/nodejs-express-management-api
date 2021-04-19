@@ -15,7 +15,7 @@ const UserHandlers = {
 
         // make a request to LoginID Management API
         try {
-            let response = await fetch(managementApiServiceUrl + `/manage/users/get`, {
+            let response = await fetch(managementApiServiceUrl + `/manage/users/retrieve`, {
                 method: "post",
                 headers: getHeaders(token),
                 body: JSON.stringify({ username })
@@ -193,7 +193,7 @@ const UserHandlers = {
         const userID = req.params.user_id;
 
         // create a signed JWT 
-        token = generateToken("users.email-verification.dispatch");
+        token = generateToken("users.emailverification_dispatch");
         
         // make a request to LoginID Management API
         try {

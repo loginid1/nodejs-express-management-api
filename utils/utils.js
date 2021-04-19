@@ -16,9 +16,9 @@ const generateToken = (scope) => {
     // nonce - a token to prevent repetetive requests with the same JWT
     // iat - issue at time 
     var payload = {
-    type: scope,
-    nonce: uuid.v4(),
-    iat: parseInt(Date.now() / 1000),
+        type: scope,
+        nonce: uuid.v4(),
+        iat: parseInt(Date.now() / 1000),
     };
 
     // create a signed JWT 
