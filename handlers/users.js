@@ -35,32 +35,32 @@ const UserHandlers = {
         }
     },
 
-    async updateUser(req, res, next) {
-        const userID = req.params.user_id;
-        const username = req.body.username;
+    // async updateUser(req, res, next) {
+    //     const userID = req.params.user_id;
+    //     const username = req.body.username;
 
-        // create a signed JWT 
-        token = generateToken("users.update");
+    //     // create a signed JWT 
+    //     token = generateToken("users.update");
 
-        // make a request to LoginID Management API
-        try {
-            let response = await fetch(managementApiServiceUrl + `/manage/users/${userID}`, {
-                method: "put",
-                headers: getHeaders(token),
-                body: JSON.stringify({ username })
-            });
+    //     // make a request to LoginID Management API
+    //     try {
+    //         let response = await fetch(managementApiServiceUrl + `/manage/users/${userID}`, {
+    //             method: "put",
+    //             headers: getHeaders(token),
+    //             body: JSON.stringify({ username })
+    //         });
 
-            let jsonResponse = await response.json();
-            if (response.ok) {
-                return res.status(200).json(jsonResponse);
-            } else {
-                return res.status(response.status).json({ code: jsonResponse.code, message: jsonResponse.message });
-            }
-        } catch(err) {
-            console.log(err);
-            return res.status(500).json(err);
-        }
-    },
+    //         let jsonResponse = await response.json();
+    //         if (response.ok) {
+    //             return res.status(200).json(jsonResponse);
+    //         } else {
+    //             return res.status(response.status).json({ code: jsonResponse.code, message: jsonResponse.message });
+    //         }
+    //     } catch(err) {
+    //         console.log(err);
+    //         return res.status(500).json(err);
+    //     }
+    // },
 
     async activateUser(req, res, next) {
         const userID = req.params.user_id;
