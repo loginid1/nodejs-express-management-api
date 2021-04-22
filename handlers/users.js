@@ -193,7 +193,7 @@ const UserHandlers = {
         const userID = req.params.user_id;
 
         // create a signed JWT 
-        token = generateToken("users.emailverification_dispatch");
+        token = generateToken("users.email_verification_dispatch");
         
         // make a request to LoginID Management API
         try {
